@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="http://d3js.org/d3.v5.min.js"></script>
+  <link href="./normal.css" rel="stylesheet" type="text/css"/>
+  <title>qidian</title>
+</head>
+<body>
+  <div>
+    <svg class="svg" width="960" height="600"></svg>
+    <svg class="svg2" width="300" height="300"></svg>
+  </div>
+  
+  <script>
+    let svg = d3.select(".svg")
+    let width = svg.attr("width")
+    let height = svg.attr("height")
+    let margin = ({top: 30, right: 0, bottom: 10, left: 30})
+    const book_data = d3.json("novel.json", {crossOrigin: "anonymous"})
+    // .then((data) => {console.log(data)}
+    // let get_book_data = async () => {
+    //   data_b = await d3.json("http://127.0.0.1:8080/novel.json").then((res) => this.book_data = res)
+    //   console.log(data_b)
+    //   return book_data
+    // }
+    // var book_data = get_book_data()
+    console.log(book_data)
+    const data = [
+      {name: "1", value: 0.12702},
+      {name: "2", value: 0.09056},
+      {name: "3", value: 0.08167},
+      {name: "4", value: 0.07507},
+      {name: "5", value: 0.06966},
+      {name: "6", value: 0.06749},
+      {name: "7", value: 0.06327},
+      {name: "8", value: 0.06094},
+      {name: "9", value: 0.05987},
+      {name: "10", value: 0.04253},
+      {name: "11", value: 0.04025},
+      {name: "12", value: 0.02782},
+      {name: "13", value: 0.02758},
+      {name: "14", value: 0.02406},
+      {name: "15", value: 0.0236},
+      {name: "16", value: 0.02288},
+      {name: "17", value: 0.02015},
+      {name: "18", value: 0.01974},
+      {name: "19", value: 0.01929},
+      {name: "20", value: 0.01492},
+      {name: "21", value: 0.00978},
+      {name: "22", value: 0.00772},
+      {name: "23", value: 0.00153},
+      {name: "24", value: 0.0015},
+      {name: "25", value: 0.00095},
+      {name: "26", value: 0.00074}
+    ]
+    barHeight = 20
+    height = Math.ceil((data.length + 0.1) * barHeight) + margin.top + margin.bottom
+
+    
+    x = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.value)])
+    .range([margin.left, width - margin.right])
+
+    y = d3.scaleBand()
+    .domain(d3.range(data.length))
+    .rangeRound([margin.top, height - margin.bottom])
+    .padding(0.1)
+
+    format = x.tickFormat(20, "%")
+
+    xAxis = g => g
+    .attr("transform", `translate(0,${margin.top})`)
+    .call(d3.axisTop(x).ticks(width / 80, "%"))
+    .call(g => g.select(".domain").remove())
+
+    yAxis = g => g
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y).tickFormat(i => data[i].name).tickSizeOuter(0))
+
+   
+    svg.append("g")
+      .call(xAxis);
+
+    svg.append("g")
+      .call(yAxis);
+
+  // 绘制矩形
+    svg.append("g")
+      .attr("fill", "steelblue")
+      .selectAll("rect")
+      .data(data)
+      .join("rect")
+      .attr("x", x(0))
+      .attr("y", (d, i) => y(i))
+      .attr("width", d => x(d.value) - x(0))
+      .attr("height", y.bandwidth())
+      // .each(() => {
+      //   let d = d3.select(this).on("click", () => {
+      //     d3.select(this).attr("fill", "black")
+      //   })
+      // })
+      // .on("mouseover", () => {
+      //    d3.selectAll("rect")
+      //     .transition()
+      //     .duration(1500)
+      //     .attr("fill","pink")
+      // })
+      // .on("mouseout",() => {
+    	// 		d3.selectAll("rect")
+    	// 			.transition()
+    	// 			.delay(1500)
+    	// 			.duration(1500)
+    	// 			.attr("fill","steelblue");
+    	// 	});
+  
+  // 绘制文字
+    svg.append("g")
+      .attr("fill", "white")
+      .attr("text-anchor", "end")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 12)
+      .selectAll("text")
+      .data(data)
+      .join("text")
+      .attr("x", d => x(d.value))
+      .attr("y", (d, i) => y(i) + y.bandwidth() / 2)
+      .attr("dy", "0.35em")
+      .attr("dx", -4)
+      .text(d => format(d.value))
+      .call(text => text.filter(d => x(d.value) - x(0) < 20) // short bars
+      .attr("dx", +4)
+      .attr("fill", "black")
+      .attr("text-anchor", "start"));
+
+    draw = function() {
+      var marge = {top:20,bottom:20,left:20,right:20}
+    	var svg = d3.select(".svg2")
+    	var width = svg.attr("width")
+    	var height = svg.attr("height")
+    	var g = svg.append("g")
+    		.attr("transform","translate("+marge.top+","+marge.left+")");
+    		
+    	var dataset = [ 30 , 10 , 43 , 55 , 13 ];
+    	
+    	//设置一个color的颜色比例尺，为了让不同的扇形呈现不同的颜色
+    	var colorScale = d3.scaleOrdinal()
+    		.domain(d3.range(dataset.length))
+    		.range(d3.schemeCategory10);
+    	
+    	//新建一个饼状图
+    	var pie = d3.pie();
+    	
+    	//新建一个弧形生成器
+    	var innerRadius = 0;//内半径
+    	var outerRadius = 100;//外半径
+    	var arc_generator = d3.arc()
+    		.innerRadius(0)
+    		.outerRadius(100);
+    		
+    	//将原始数据变成可以绘制饼状图的数据，
+    	var pieData = pie(dataset);
+    	
+    	//在浏览器的控制台打印pieData
+    	console.log(pieData);
+    	
+    	//在有了绘制饼状图必须的数据后，我们就可以开始绘制了
+    	var gs = g.selectAll(".g")
+    		.data(pieData)
+    		.enter()
+    		.append("g")
+    		.attr("transform","translate("+width/2+","+height/2+")")//位置信息
+    		
+    	//绘制饼状图的各个扇形
+    	gs.append("path")
+    		.attr("d",function(d){
+    			return arc_generator(d);//往弧形生成器中出入数据
+    		})
+    		.attr("fill",function(d,i){
+    			return colorScale(i);
+    		});
+    		
+    	//绘制饼状图上面的文字信息
+    	gs.append("text")
+    		.attr("transform",function(d){//位置设在中心处
+    			return "translate("+arc_generator.centroid(d)+")";
+    		})
+    		.attr("text-anchor","middle")
+    		.text(function(d){
+    			return d.data;
+    		})
+    }
+
+    d3.select(".svg2")
+    .call(draw)
+
+  </script>
+</body>
+</html>
