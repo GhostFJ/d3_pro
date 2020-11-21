@@ -10,7 +10,7 @@
 <body>
   <div>
     <svg class="svg" width="960" height="600"></svg>
-    <svg class="svg2" width="300" height="300"></svg>
+    <!-- <svg class="svg2" width="300" height="300"></svg> -->
   </div>
   
   <script>
@@ -92,6 +92,8 @@
       .selectAll("rect")
       .data(data)
       .join("rect")
+      .attr("pointer-events", "all")
+      .on("click", clicked)
       .attr("x", x(0))
       .attr("y", (d, i) => y(i))
       .attr("width", d => x(d.value) - x(0))
@@ -131,16 +133,21 @@
       .text(d => format(d.value))
       .call(text => text.filter(d => x(d.value) - x(0) < 20) // short bars
       .attr("dx", +4)
-      .attr("fill", "black")
+      .attr("fill", "black") 
       .attr("text-anchor", "start"));
 
-    draw = function() {
-      var marge = {top:20,bottom:20,left:20,right:20}
-    	var svg = d3.select(".svg2")
+    function clicked(event, p) {
+      draw();
+    }
+
+    drawpie = function(svg) {
+      var marge = {top:100,bottom:20,left:100,right:20}
+    	// var svg = d3.select(".svg2") 
     	var width = svg.attr("width")
     	var height = svg.attr("height")
+      console.log(width);
     	var g = svg.append("g")
-    		.attr("transform","translate("+marge.top+","+marge.left+")");
+    		.attr("transform","translate("+200+","+200+")");
     		
     	var dataset = [ 30 , 10 , 43 , 55 , 13 ];
     	
@@ -192,8 +199,12 @@
     		})
     }
 
-    d3.select(".svg2")
-    .call(draw)
+    draw = function() {
+        d3.select(".svg")
+          .append("g")
+          .attr("class", "svg2")
+          .call(drawpie)
+      }
 
   </script>
 </body>

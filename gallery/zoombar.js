@@ -37,8 +37,14 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickValues([10,20,30, 40, 50, 60, 70, 80, 90, 100]).tickSizeOuter(0))
       .call(g => g.selectAll('.tick text')
-        .attr('transform','rotate(25)')
-      );
+        .attr('transform','rotate(25)'))
+      .call(g => g.append("text")
+        .attr("x", width - margin.right)
+        .attr("y", -20)
+        .attr("fill", "currentColor")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "end")
+        .text("排名"));
 
 
       yAxis = g => g
@@ -97,11 +103,22 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
       .selectAll(".bar")
       .data(data_b)
       .join("rect")
+      .attr("pointer-events", "all")
+      .on("click", clicked)
       .attr("class", "bar")
       .attr("x", d => x(d.rank))
       .attr("y", d => y(d.tickets/1000))
       .attr("height", d => y(0) - y(d.tickets/1000))
       .attr("width", x.bandwidth())
+
+      function clicked(event, d) {
+        console.log(d)
+        if (document.getElementsByClassName("svg-pie")) {
+          // 因为绘画的时候是在g里面，所以不是删除svg-pie，多根据F12查看页面元素
+          d3.select(".svg-pie").select("g").remove()
+        }
+        draw_func()
+      }
 
       svg.selectAll('rect')
         .on('mouseover', tip.show)

@@ -123,6 +123,13 @@
           .attr("class", "y-axis")
           .call(yAxis)
           .append("g")
+
+      svg.append("g")
+      .attr("class", "arc")
+      .append("svg")
+      .attr("height", 200)
+      .attr("width", 200)
+      .attr("fill", "black")
     }
     
   </script>
