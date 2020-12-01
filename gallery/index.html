@@ -4,18 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="favicon.ico" rel="shortcut icon">
-  <script type="text/javascript" src="http://d3js.org/d3.v6.min.js"></script>
+  <!-- <script type="text/javascript" src="http://d3js.org/d3.v6.min.js"></script> -->
+  <script type="text/javascript" src="./d3.min.js"></script>
   <script src="https://unpkg.com/d3-v6-tip@1.0.6/build/d3-v6-tip.js"></script>
   <link href="./app.css" rel="stylesheet" type="text/css"/>
   <title>起点月票统计</title>
 </head>
 <body>
-  <div>
-    <h1 class="threed" style="text-align: center;">起点小说月票数据统计</h1>
-    <svg class="svg"></svg>
-    <svg class="svg-pie" width="600" height="600"></svg>
-  </div>
-  <script type="text/javascript" src="zoombar.js"></script>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">月票排行</a>
+      <a href="#">推荐票排行</a>
+    </div>
+    
+    <div id="main">
+      <h1 class="threed" style="text-align: center;">起点小说数据统计</h1>
+      <svg class="svg"></svg>
+      <button id="btn" onclick="cancel()" style="display: none;">取消</button>
+      <button class="sidebtn" style="font-size:25px;cursor:pointer" onclick="openNav()">&#9776;</button>
+    </div>
+
+  <script>
+
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+          document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
+        /*关闭侧栏，恢复原始侧栏宽度，主体左跨度、背景透明度*/
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+      document.body.style.backgroundColor = "white";
+    }
+
+    function DisplayBtn() {
+      btn = document.getElementById("btn")
+      if(document.getElementsByClassName("svg-pie")) {
+        btn.style.display = "block"
+      }
+    }
+
+    function cancel() {
+      document.getElementById("btn").style.display = "none"
+      d3.select(".svg-pie").select("g").remove()
+    }
+  </script>
   <script type="text/javascript" src="zoomsunbrust.js"></script>
+  <script type="text/javascript" src="zoombar.js"></script>
 </body>
 </html>

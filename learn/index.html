@@ -3,21 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript" src="http://d3js.org/d3.v5.min.js"></script>
+  <script type="text/javascript" src="./d3.min.js"></script>
   <link href="./normal.css" rel="stylesheet" type="text/css"/>
+  <link href="./css/font-awesome.min.css" rel="stylesheet"> 
   <title>qidian</title>
 </head>
 <body>
+  
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+  </div>
+
+  <span style="font-size:30px; cursor:pointer" onclick="openNav()">&#9776; 打开</span>
   <div>
     <svg class="svg" width="960" height="600"></svg>
     <!-- <svg class="svg2" width="300" height="300"></svg> -->
   </div>
   
   <script>
+    
     let svg = d3.select(".svg")
     let width = svg.attr("width")
     let height = svg.attr("height")
-    let margin = ({top: 30, right: 0, bottom: 10, left: 30})
+    let margin = ({top: 30, right: 10, bottom: 10, left: 30})
     const book_data = d3.json("novel.json", {crossOrigin: "anonymous"})
     // .then((data) => {console.log(data)}
     // let get_book_data = async () => {
@@ -55,27 +65,27 @@
       {name: "25", value: 0.00095},
       {name: "26", value: 0.00074}
     ]
-    barHeight = 20
+    const barHeight = 20
     height = Math.ceil((data.length + 0.1) * barHeight) + margin.top + margin.bottom
 
     
-    x = d3.scaleLinear()
+    let x = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.value)])
     .range([margin.left, width - margin.right])
 
-    y = d3.scaleBand()
+    let y = d3.scaleBand()
     .domain(d3.range(data.length))
     .rangeRound([margin.top, height - margin.bottom])
     .padding(0.1)
 
-    format = x.tickFormat(20, "%")
+    let format = x.tickFormat(20, "%")
 
-    xAxis = g => g
+    let xAxis = g => g
     .attr("transform", `translate(0,${margin.top})`)
     .call(d3.axisTop(x).ticks(width / 80, "%"))
     .call(g => g.select(".domain").remove())
 
-    yAxis = g => g
+    let yAxis = g => g
     .attr("transform", `translate(${margin.left},0)`)
     .call(d3.axisLeft(y).tickFormat(i => data[i].name).tickSizeOuter(0))
 
@@ -96,8 +106,19 @@
       .on("click", clicked)
       .attr("x", x(0))
       .attr("y", (d, i) => y(i))
-      .attr("width", d => x(d.value) - x(0))
+      .attr("width", (d) => {
+        return 0;
+      })
       .attr("height", y.bandwidth())
+      .transition()
+      .duration(1000)
+      .delay(function (d, i) {
+        return 500 * i;
+      })
+      .attr('x', function (d, i) {
+        return x(0);
+      })
+      .attr("width", d => x(d.value) - x(0))
       // .each(() => {
       //   let d = d3.select(this).on("click", () => {
       //     d3.select(this).attr("fill", "black")
@@ -140,7 +161,7 @@
       draw();
     }
 
-    drawpie = function(svg) {
+    let drawpie = function(svg) {
       var marge = {top:100,bottom:20,left:100,right:20}
     	// var svg = d3.select(".svg2") 
     	var width = svg.attr("width")
@@ -199,7 +220,7 @@
     		})
     }
 
-    draw = function() {
+    let draw = function() {
         d3.select(".svg")
           .append("g")
           .attr("class", "svg2")

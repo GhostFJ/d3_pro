@@ -11,7 +11,6 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
     
     // 进行sv绘制的主函数
     function createDiagram() {
-      console.log(data_b);
       setScales(data_b)
       setAxises()
       draw()
@@ -55,7 +54,7 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
         .attr("x", 3)
         .attr("text-anchor", "start")
         .attr("font-weight", "bold")
-        .text("月票/千张"))
+        .text("票数/千张"))
     }
 
     // 绘图函数
@@ -92,7 +91,7 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
         .html(function(event, d) {
           return "<strong>作者: </strong> <span style='color:pink'>" + d.author + "</span>"+
             "<br><strong>书名: </strong> <span style='color:pink'>" + d.name + "</span>"+
-            "<br><strong>月票: </strong> <span style='color:pink'>" + d.tickets + "</span>";
+            "<br><strong>票数: </strong> <span style='color:pink'>" + d.tickets + "</span>";
         })
 
       svg.call(tip)
@@ -107,17 +106,32 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
       .on("click", clicked)
       .attr("class", "bar")
       .attr("x", d => x(d.rank))
+      .attr("y", height - margin.bottom)
+      // .attr("y", d => y(d.tickets/1000))
+      .attr("height", () => {
+        return 0;
+      })
+      // .attr("height", d => y(0) - y(d.tickets/1000))
+      .attr("width", x.bandwidth())
+      .transition()
+      .duration(1000)
+      .delay(function (d, i) {
+        return 500 * i;
+      })
       .attr("y", d => y(d.tickets/1000))
       .attr("height", d => y(0) - y(d.tickets/1000))
-      .attr("width", x.bandwidth())
 
+      
       function clicked(event, d) {
-        console.log(d)
         if (document.getElementsByClassName("svg-pie")) {
           // 因为绘画的时候是在g里面，所以不是删除svg-pie，多根据F12查看页面元素
-          d3.select(".svg-pie").select("g").remove()
+          d3.select(".svg-pie").remove()
         }
-        draw_func()
+        DisplayBtn();
+        d3.select(".svg")
+          .append("g")
+          .attr("class", "svg-pie")
+          .call(draw_func(d.rank))
       }
 
       svg.selectAll('rect')

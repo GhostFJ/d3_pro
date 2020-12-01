@@ -3,10 +3,10 @@
   height: 100%;
 }
 
-.svg-pie {
-  position: absolute;
-  left: 40%;
-  top: 20%;
+g.svg-pie {
+  position: relative;
+  left: 50%;
+  top: 30%;
 }
 
 .threed{
@@ -14,15 +14,70 @@
   letter-spacing: 0;
   text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135 
 }
+.sidebtn {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  box-shadow: 0 5px rgb(97, 95, 95);
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
 
-html {
+#btn {
+  position: absolute;
+  left: 40%;
+  bottom: 30%;
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  box-shadow: 0 5px #bbb;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+#btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+#btn:active {
+  transform: translateY(4px);
+}
+
+/* html {
   background: url(back.jpg) bottom center no-repeat #efeff4 ;
   background-size: 100% 100%;
-}
+} */
 
-body {
-  font: 20px sans-serif;
-}
 
 .axis path,
 .axis line {
@@ -69,3 +124,60 @@ body {
 }
 
 
+body {
+  font-family: "Lato", sans-serif;
+  transition: background-color .5s;
+}
+
+/*侧边栏选择器*/
+.sidenav {
+  height: 100%;
+  width: 0; /*原始宽度*/
+  position: fixed;
+  /*z-index、top、left共同控制侧栏的悬浮（上方1，下方-1）*/
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s; /*侧栏延迟0.5s显示*/
+  padding-top: 60px;
+}
+
+/*侧边栏标签选择器*/
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s; /*标签延迟0.3s显示*/
+}
+
+/*侧栏标签和关闭按钮光标的效果*/
+.sidenav a:hover, .offcanvas a:focus{
+  color: #f1f1f1;
+}
+
+/*侧栏和关闭按钮的位置选择器*/
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/*主体内容*/
+#main {
+  background: url(back.jpg) bottom center no-repeat #efeff4 ;
+  background-size: 100% 100%;
+  transition: margin-left .5s;/*主体内容延迟0.5s整体y右移动*/
+  padding: 16px;
+}
+
+/*当文档高度小于450px时，改变侧栏的padding属性和字体大小*/
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
