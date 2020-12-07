@@ -7,6 +7,7 @@
   <!-- <script type="text/javascript" src="http://d3js.org/d3.v6.min.js"></script> -->
   <script type="text/javascript" src="./d3.min.js"></script>
   <script src="https://unpkg.com/d3-v6-tip@1.0.6/build/d3-v6-tip.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <link href="./app.css" rel="stylesheet" type="text/css"/>
   <title>起点月票统计</title>
 </head>
@@ -22,13 +23,29 @@
       <svg class="svg"></svg>
       <button id="btn" onclick="cancel()" style="display: none;">取消</button>
       <button class="sidebtn" style="font-size:25px;cursor:pointer" onclick="openNav()">&#9776;</button>
+      <div class="footer">
+        
+        <div class="search-box">
+          <input class="search-txt" type="text" name="" placeholder="Type to search">
+          <a class="search-btn">
+            <i class="fa fa-search fa-lg"></i>
+          </a>
+        </div>
+        <a href="https://www.qidian.com/">起点主页</a><br />
+        
+        <a href="https://www.qidian.com/rank/yuepiao?style=1">起点月票榜</a><span>|</span><a href="https://www.qidian.com/rank/fengyun?style=1">原创风云榜
+        </a><span>|</span><a href="#">关于q起点</a><span>|</span><a href="#">About Qidian</a><span>|</span><a href="#">加入开放首页</a><br />
+        
+        <p class="bottom">2020 qidian <a href="#">使用前必读</a> 京ICP证030173号</p>
+      </div>
+      
     </div>
-
+    
   <script>
 
     function openNav() {
-      document.getElementById("mySidenav").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
+      document.getElementById("mySidenav").style.width = "220px";
+      document.getElementById("main").style.marginLeft = "220px";
           document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
         /*关闭侧栏，恢复原始侧栏宽度，主体左跨度、背景透明度*/

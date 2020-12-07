@@ -75,7 +75,10 @@
             .on("click", clicked);
 
         path.append("title")
-            .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
+            .text(
+              d => `${d.data.name}`
+              // d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n`
+              );
 
         const label = g.append("g")
             .attr("pointer-events", "none")
@@ -87,7 +90,10 @@
             .attr("dy", "0.35em")
             .attr("fill-opacity", d => +labelVisible(d.current))
             .attr("transform", d => labelTransform(d.current))
-            .text(d => d.data.name);
+            .text(d => {
+              if(typeof(d.data.name) == "string" && d.data.name.length > 4)
+                return d.data.name.substr(0,4) + '..'
+              return d.data.name});
 
         const parent = g.append("circle")
             .datum(root)

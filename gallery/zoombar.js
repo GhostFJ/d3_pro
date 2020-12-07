@@ -1,4 +1,4 @@
-let margin = ({top: 20, right: 0, bottom: 30, left: 40})
+    let margin = ({top: 20, right: 0, bottom: 30, left: 40})
     let data_b
     const width = 960
     const height = 600
@@ -121,7 +121,7 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
       .attr("y", d => y(d.tickets/1000))
       .attr("height", d => y(0) - y(d.tickets/1000))
 
-      
+
       function clicked(event, d) {
         if (document.getElementsByClassName("svg-pie")) {
           // 因为绘画的时候是在g里面，所以不是删除svg-pie，多根据F12查看页面元素
@@ -131,7 +131,7 @@ let margin = ({top: 20, right: 0, bottom: 30, left: 40})
         d3.select(".svg")
           .append("g")
           .attr("class", "svg-pie")
-          .call(draw_func(d.rank))
+          .call(() => draw_func(d.rank)) 
       }
 
       svg.selectAll('rect')

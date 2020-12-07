@@ -173,11 +173,78 @@ body {
   background: url(back.jpg) bottom center no-repeat #efeff4 ;
   background-size: 100% 100%;
   transition: margin-left .5s;/*主体内容延迟0.5s整体y右移动*/
-  padding: 16px;
+  padding: 10px;
 }
 
 /*当文档高度小于450px时，改变侧栏的padding属性和字体大小*/
 @media screen and (max-height: 450px) {
 .sidenav {padding-top: 15px;}
 .sidenav a {font-size: 18px;}
+}
+
+/* 底部信息栏 */
+
+p{
+	margin:0;
+	padding:0;
+	list-style:none;
+	border:0;
+}
+.footer{
+	width:100%;
+	height:150px;
+	text-align:center;
+	line-height:30px;
+	font-size:12px;
+}
+.footer span{
+	margin:0 5px;
+}
+.footer .bottom{
+	color:#666666;
+}
+.footer .bottom a{
+	text-decoration:none;
+}
+
+/* 底部搜索栏 */
+.search-box{
+  position: absolute;
+  top:5%;
+  right:20%;
+  transform: translate(50%,50%);
+  background: #2f3640;
+  height: 40px;
+  border-radius: 40px;
+  padding: 10px;
+}
+.search-box:hover>.search-txt{
+  width: 240px;
+  padding: 0 6px;
+}
+.search-box:hover>.search-btn{
+ background: white;
+}
+.search-btn{
+  color: #e84118;
+  float:right ;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2f3640;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-txt{
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0px;
 }
