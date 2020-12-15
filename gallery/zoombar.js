@@ -61,6 +61,8 @@
     function draw() {
       const svg = d3.select("svg")
       .attr("viewBox", [0, 0, width, height])
+      .append("g")
+      .attr("id", "ticketShow")
       .call(zoom)
       
 

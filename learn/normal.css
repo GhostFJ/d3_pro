@@ -16,3 +16,15 @@ html,body,div{
   bottom: 300px;
 }
 
+.multieditbox{
+  background: #f8f8f8;
+  border-bottom: #b7b7b7 1px solid;
+  border-left: #b7b7b7 1px solid;
+  border-right: #b7b7b7 1px solid;
+  border-top: #b7b7b7 1px solid;
+  color: #000000;
+  cursor: text;
+  font-family: "arial";
+  font-size: 9pt;
+  padding: 1px; /*www.52css.com*/
+}

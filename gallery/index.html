@@ -6,6 +6,7 @@
   <link href="favicon.ico" rel="shortcut icon">
   <!-- <script type="text/javascript" src="http://d3js.org/d3.v6.min.js"></script> -->
   <script type="text/javascript" src="./d3.min.js"></script>
+  <script src="./d3.layout.cloud.js"></script>
   <script src="https://unpkg.com/d3-v6-tip@1.0.6/build/d3-v6-tip.js"></script>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <link href="./app.css" rel="stylesheet" type="text/css"/>
@@ -14,23 +15,34 @@
 <body>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="#">月票排行</a>
-      <a href="#">推荐票排行</a>
+      <a href="#" onclick="reloadpage()">月票排行</a>
+      <a href="#" onclick="wordcloud()">词云展示</a>
     </div>
     
+    <!-- 页面主体 -->
     <div id="main">
       <h1 class="threed" style="text-align: center;">起点小说数据统计</h1>
       <svg class="svg"></svg>
       <button id="btn" onclick="cancel()" style="display: none;">取消</button>
       <button class="sidebtn" style="font-size:25px;cursor:pointer" onclick="openNav()">&#9776;</button>
+      
+      <!-- 搜索框部分 -->
+      <div class="search-box">
+        <input id="search-book" class="search-txt" type="text" placeholder="Book to search">
+        <a class="search-btn" onclick="searchRes()">
+          <i class="fa fa-search fa-lg"></i>
+        </a>
+      </div>
+      
+      <!-- 搜索内容显示 -->
+      <textarea id="text-area"
+      style="border:0;border-radius:5px;background-color:rgba(241,241,241,.98);
+      width: 500px;height: 300px;padding: 10px;resize: none;" 
+      placeholder="查询结果：..."
+      readonly></textarea>
+      
+      <!-- 页面底部信息 -->
       <div class="footer">
-        
-        <div class="search-box">
-          <input class="search-txt" type="text" name="" placeholder="Type to search">
-          <a class="search-btn">
-            <i class="fa fa-search fa-lg"></i>
-          </a>
-        </div>
         <a href="https://www.qidian.com/">起点主页</a><br />
         
         <a href="https://www.qidian.com/rank/yuepiao?style=1">起点月票榜</a><span>|</span><a href="https://www.qidian.com/rank/fengyun?style=1">原创风云榜
@@ -40,8 +52,14 @@
       </div>
       
     </div>
-    
+  
+  
+
   <script>
+    // 点击刷新页面
+    function reloadpage () {
+      window.location.reload()
+    }
 
     function openNav() {
       document.getElementById("mySidenav").style.width = "220px";
@@ -52,7 +70,7 @@
     function closeNav() {
       document.getElementById("mySidenav").style.width = "0";
       document.getElementById("main").style.marginLeft= "0";
-      document.body.style.backgroundColor = "white";
+      // document.body.style.backgroundColor = "white";
     }
 
     function DisplayBtn() {
@@ -66,7 +84,52 @@
       document.getElementById("btn").style.display = "none"
       d3.select(".svg-pie").select("g").remove()
     }
+
+    let search_input = document.getElementById("search-book")
+
+    function searchRes() {
+      let searchVal = search_input.value
+      let info = " "
+      console.log(searchVal);
+      const searchRequest = d3.json("novels-2020-11-10.json", {crossOrigin: "anonymous"})
+      .then(book_data => {
+        // const book_info = book_data
+        for (index in book_data) {
+          if (book_data[index]["name"] == searchVal) {
+
+            info = "书名：" + book_data[index].name + "\n" + 
+                    "作者：" + book_data[index].author + "\n" +
+                    "类型" + book_data[index].types + "\n" +
+                    "状态：" + book_data[index].status + "\n" +
+                    "简介：" + book_data[index].intro + "\n" +
+                    "更新：" + book_data[index].update + "\n" +
+                    "更新日期：" + book_data[index].date + "\n" +
+                    "月票数：" + book_data[index].tickets + "\n" 
+            break
+          }
+        }
+        if (info == " ")
+          info = "查无此书"
+        document.getElementById("text-area").innerHTML = info + "\n按esc键关闭..."
+        document.getElementById("text-area").style.display = "block"
+      })
+      
+    }
+
+    // 监听enter键
+    search_input.addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            +searchRes();
+        }
+        // esc键关闭
+        if(event.keyCode === 27) {
+          document.getElementById("text-area").style.display = "none"
+        }
+    });
+
   </script>
+  <script src="wordcloud.js"></script>
   <script type="text/javascript" src="zoomsunbrust.js"></script>
   <script type="text/javascript" src="zoombar.js"></script>
 </body>
