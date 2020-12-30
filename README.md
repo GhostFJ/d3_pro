@@ -15,7 +15,8 @@
 
 ### 数据爬虫：
 
-主要为xpath和beautiful soup，获取起点小说月票排行榜页面https://www.qidian.com/rank/yuepiao?page=1，改变page值切换页面，获取五页一百本小说数据，同时针对反爬虫的字体问题，根据对应链接去下载字体后再映射为正常数据。保存为json文件，格式如下
+主要为xpath和beautiful soup，获取起点小说月票排行榜页面https://www.qidian.com/rank/yuepiao?page=1，
+通过改变page值切换页面，获取五页一百本小说数据，同时针对反爬虫的字体问题，根据对应链接去下载字体后再映射为正常数据。保存为json文件，格式如下
 
 ```
 {
