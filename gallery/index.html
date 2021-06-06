@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="favicon.ico" rel="shortcut icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
   <!-- <script type="text/javascript" src="http://d3js.org/d3.v6.min.js"></script> -->
   <script type="text/javascript" src="./d3.min.js"></script>
   <script src="./d3.layout.cloud.js"></script>
@@ -19,9 +20,11 @@
       <a href="#" onclick="wordcloud()">词云展示</a>
     </div>
     
+    
     <!-- 页面主体 -->
     <div id="main">
       <h1 class="threed" style="text-align: center;">起点小说数据统计</h1>
+      
       <svg class="svg"></svg>
       <button id="btn" onclick="cancel()" style="display: none;">取消</button>
       <button class="sidebtn" style="font-size:25px;cursor:pointer" onclick="openNav()">&#9776;</button>
@@ -34,19 +37,27 @@
         </a>
       </div>
       
+      <!-- style="border:0;border-radius:5px;background-color:rgba(241,241,241,.98);
+      width: 500px;height: 300px;padding: 10px;resize: none;"  -->
+
       <!-- 搜索内容显示 -->
-      <textarea id="text-area"
-      style="border:0;border-radius:5px;background-color:rgba(241,241,241,.98);
-      width: 500px;height: 300px;padding: 10px;resize: none;" 
-      placeholder="查询结果：..."
-      readonly></textarea>
+
+        <div id="txt-area-ctl" class="control" >
+          <textarea 
+            id="text-area"
+            class="textarea is-info is-medium"
+            placeholder="查询结果：..."
+            readonly>
+          </textarea>
+        </div>
+          
       
       <!-- 页面底部信息 -->
       <div class="footer">
         <a href="https://www.qidian.com/">起点主页</a><br />
         
         <a href="https://www.qidian.com/rank/yuepiao?style=1">起点月票榜</a><span>|</span><a href="https://www.qidian.com/rank/fengyun?style=1">原创风云榜
-        </a><span>|</span><a href="#">关于q起点</a><span>|</span><a href="#">About Qidian</a><span>|</span><a href="#">加入开放首页</a><br />
+        </a><span>|</span><a href="#">关于起点</a><span>|</span><a href="#">About Qidian</a><span>|</span><a href="#">加入开放首页</a><br />
         
         <p class="bottom">2020 qidian <a href="#">使用前必读</a> 京ICP证030173号</p>
       </div>
@@ -112,6 +123,7 @@
           info = "查无此书"
         document.getElementById("text-area").innerHTML = info + "\n按esc键关闭..."
         document.getElementById("text-area").style.display = "block"
+        document.getElementById("txt-area-ctl").style.display = "block"
       })
       
     }
@@ -122,11 +134,18 @@
         if (event.keyCode === 13) {
             +searchRes();
         }
-        // esc键关闭
-        if(event.keyCode === 27) {
-          document.getElementById("text-area").style.display = "none"
-        }
+        // // esc键关闭
+        // if(event.keyCode === 27) {
+        //   document.getElementById("text-area").style.display = "none"
+        // }
     });
+
+    document.addEventListener("keyup", ()=>{
+      if(event.keyCode === 27 && document.getElementById("text-area").style.display == "block") {
+          document.getElementById("text-area").style.display = "none"
+          document.getElementById("search-book").value=""
+        }
+    })
 
   </script>
   <script src="wordcloud.js"></script>

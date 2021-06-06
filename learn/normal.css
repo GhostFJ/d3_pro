@@ -28,3 +28,18 @@ html,body,div{
   font-size: 9pt;
   padding: 1px; /*www.52css.com*/
 }
+
+@media (prefers-color-scheme: dark) {.js_darkmode__0 {
+    color: rgba(0, 0, 0, 0.9) ! important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url("back.gif") ! important;
+  }.js_darkmode__1 {
+    color: rgba(0, 0, 0, 0.9) ! important;
+  }.js_darkmode__bg__0 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url("back.gif"),
+    linear-gradient(#fff, #fff) !important;
+  }.js_darkmode__bg__1 {
+    background-image: -webkit-linear-gradient(left, transparent, rgb(153, 153, 152), transparent) ! important;
+  }
+}
